@@ -3,17 +3,42 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 
-// Category Routes
-Route::resource('products', ProductController::class);
-Route::resource('categories', CategoryController::class)->middleware('auth');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-// Product Routes
-Route::resource('products', ProductController::class)->middleware('auth');
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::resource('products', ProductController::class);
+    Route::resource('categories', CategoryController::class);
+});
+
+require __DIR__.'/auth.php';
+
+// Authentication routes
+Route::get('/register', [RegisteredUserController::class, 'create'])
+    ->middleware('guest')
+    ->name('register');
+
+Route::post('/register', [RegisteredUserController::class, 'store'])
+    ->middleware('guest');
+
+// Dashboard route
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth')->name('dashboard');
 Route::get('/', function () {
     return view('welcome');
 });

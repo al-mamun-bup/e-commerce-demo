@@ -11,5 +11,10 @@ class Category extends Model
 
     // Add this line to allow mass assignment for the 'name' attribute
     protected $fillable = ['name'];
+//     public function create()
+// {
+//     $categories = Category::all(); // Fetch all categories
+//     return view('products.create', compact('categories')); // Pass categories to view
+// }
 }
 

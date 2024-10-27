@@ -1,0 +1,22 @@
+.container {
+    max-width: 1200px;
+}
+
+.card {
+    border: 1px solid #e0e0e0;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+}
